@@ -1,1 +1,1 @@
-# java-discord-bot
+# discord-bot-project
