@@ -4,6 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Slf4j
 public enum BitMask {
@@ -36,16 +38,15 @@ public enum BitMask {
         this.rawValue = 1 << offset;
     }
 
-    // EnumSet
     public static int getRaw(@Nonnull Collection<BitMask> set) {
         int raw = 0;
+        log.debug("=================");
         for (BitMask intent : set) {
-            log.debug("offset: {}", intent.offset);
+            log.debug("offset: {} ({})", intent.offset, intent);
             log.debug("rawValue: {}", intent.rawValue);
-            log.debug("=============");
+            log.debug("=================");
             raw |= intent.rawValue;
         }
-        log.debug("total: {}", raw);
         return raw;
     }
 
@@ -57,10 +58,12 @@ public enum BitMask {
         return UNKNOWN;
     }
 
-    public static void result(int raw) {
+    public static Set<BitMask> getBitMasks(int raw) {
+        Set<BitMask> bitMasks = new HashSet<>();
         for (int n = 0; n < Integer.SIZE; n++) {
             if ((raw & (1 << n)) < 1) continue;
-            log.debug("{}", BitMask.valueOf(n));
+            bitMasks.add(BitMask.valueOf(n));
         }
+        return bitMasks;
     }
 }
