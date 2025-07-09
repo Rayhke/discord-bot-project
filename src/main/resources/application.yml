@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: discord-bot-project
+  profiles:
+    active: ${PROFILE_ACTIVE:dev}
+
+## ==========================
+## === [Temporal Setting] ===
+## ==========================
+
+temporal:
+  time-zone: Asia/Seoul
+  initial-date-format: yyyy-MM-dd
+  meridiem-text: korea
+  date-patterns:
+    - yyyy년 MM월 dd일
+    - yyyy-MM-dd
+    - yyyy.MM.dd
+
+## =========================
+## === [Logging Setting] ===
+## =========================
+
+logging:
+  level:
+    root: info
+    sql: info
+
+    # Java RMI(Remote Method Invocation)
+    sun:
+      rmi: off
+
+    # Java JMX(Java Management Extensions)
+    javax:
+      management: off
+
+  file:
+    name: logs/${spring.application.name}.log
