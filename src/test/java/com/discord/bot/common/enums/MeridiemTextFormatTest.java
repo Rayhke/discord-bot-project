@@ -29,8 +29,9 @@ class MeridiemTextFormatTest {
 
         Assertions.assertTrue(
                 meridiemTextFormat.getDocument().contains(meridiem),
-                () -> String.format("문자열 '%s'은 document '%s' 내에 포함되어야 합니다.",
-                        meridiem, meridiemTextFormat.getDocument())
+                () -> "문자열 '%s'은 document '%s' 내에 포함되어야 합니다.".formatted(
+                        meridiem, meridiemTextFormat.getDocument()
+                )
         );
     }
 
