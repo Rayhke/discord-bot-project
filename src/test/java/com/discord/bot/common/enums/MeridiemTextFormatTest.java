@@ -23,7 +23,7 @@ class MeridiemTextFormatTest {
         Locale locale = meridiemTextFormat.getLocale();
         String meridiem = now.format(DateTimeFormatter.ofPattern("a", locale));
 
-        log.debug("Enum: {}", meridiemTextFormat.name());
+        log.debug("MeridiemTextFormat: {}", meridiemTextFormat.name());
         log.debug("Locale: {}", locale);
         log.debug("Formatted meridiem: {}", meridiem);
 
