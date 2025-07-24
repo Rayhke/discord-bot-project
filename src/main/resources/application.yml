@@ -10,12 +10,14 @@ spring:
 
 temporal:
   time-zone: Asia/Seoul
-  initial-date-format: yyyy-MM-dd
-  meridiem-text: korea
+  initial-date-pattern: yyyy-MM-dd
   date-patterns:
     - yyyy년 MM월 dd일
     - yyyy-MM-dd
     - yyyy.MM.dd
+
+  time-hour-format: hour_12
+  meridiem-text-format: kr
 
 ## =========================
 ## === [Logging Setting] ===
