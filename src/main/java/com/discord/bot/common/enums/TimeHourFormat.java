@@ -12,7 +12,7 @@ import lombok.Getter;
  * </ul>
  * 이 enum은 사용자 정의 시간 포맷 설정 시 패턴을 선택적으로 조립하는 데 활용됩니다.
  *
- * @author nink2458
+ * @author Rayhke
  * @version 250630
  * @since 250630
  */

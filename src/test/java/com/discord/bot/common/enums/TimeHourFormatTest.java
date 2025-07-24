@@ -9,6 +9,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import java.util.stream.Stream;
 
 @Slf4j
@@ -17,25 +18,31 @@ class TimeHourFormatTest {
     @DisplayName("TimeHourFormat 테스트")
     @ParameterizedTest
     @MethodSource("timeHourFormatValues")
-    void timeHourFormatValuesTest(String pattern, int length) {
+    void timeHourFormatValuesTest(TimeHourFormat timeHourFormat) {
         LocalDateTime now = LocalDateTime.now();
-
         DateTimeFormatter dateTimeFormatter = Assertions.assertDoesNotThrow(
-                () -> DateTimeFormatter.ofPattern(pattern),
-                "유효하지 않은 패턴: %s".formatted(pattern)
+                () -> DateTimeFormatter.ofPattern(timeHourFormat.getPattern(), Locale.KOREA),
+                () -> "유효하지 않은 패턴: %s".formatted(timeHourFormat.getPattern())
         );
+        String timeHour = now.format(dateTimeFormatter);
 
-        log.debug("Time hour: {}", now.format(dateTimeFormatter));
-        Assertions.assertEquals(length, now.format(dateTimeFormatter).length());
+        log.debug("TimeHourFormat: {}", timeHourFormat.name());
+        log.debug("Formatted Hour: {}", timeHour);
+
+        switch (timeHourFormat) {
+            case HOUR_24 -> Assertions.assertTrue(
+                    timeHour.matches("\\d{2}:\\d{2}$"),
+                    () -> "24시간 형식은 숫자 2자리로 시작해야 합니다. 실제: %s".formatted(timeHour)
+            );
+            case HOUR_12 -> Assertions.assertTrue(
+                    timeHour.matches("^(오전|오후|AM|PM)\\s\\d{2}:\\d{2}$"),
+                    () -> "12시간 형식은 Meridiem과 숫자 조합이어야 합니다. 실제: %s".formatted(timeHour)
+            );
+        }
     }
 
     private static Stream<Arguments> timeHourFormatValues() {
         return Stream.of(TimeHourFormat.values())
-                .map(value ->
-                        Arguments.of(
-                                value.getPattern(),
-                                value.getPattern().length() == 5 ? 5 : 8
-                        )
-                );
+                .map(Arguments::of);
     }
 }
