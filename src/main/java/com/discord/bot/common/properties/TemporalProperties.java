@@ -39,10 +39,9 @@ import java.util.List;
  * }</pre>
  *
  * @author Rayhke
- * @version 250710
+ * @version 250712
  * @since 250705
  */
-@Slf4j
 @Getter
 @Setter
 @Component
