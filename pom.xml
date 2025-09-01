@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.5.3</version>
+        <version>3.5.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.discord</groupId>
@@ -27,7 +27,7 @@
         <url/>
     </scm>
     <properties>
-        <java.version>17</java.version>
+        <java.version>21</java.version>
     </properties>
     <dependencies>
         <dependency>
@@ -41,8 +41,11 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- ======================================================================================================= -->
+        <!-- [Discord Library] -->
+
         <!-- https://mvnrepository.com/artifact/net.dv8tion/JDA -->
-        <!-- [Discord Bot] -->
+        <!-- Discord Bot -->
         <dependency>
             <groupId>net.dv8tion</groupId>
             <artifactId>JDA</artifactId>
@@ -52,6 +55,8 @@
         <!-- ======================================================================================================= -->
         <!-- [Developer Tools] -->
 
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+        <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -60,7 +65,6 @@
 
         <!-- ======================================================================================================= -->
 
-
     </dependencies>
 
     <build>
@@ -68,6 +72,50 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            <!-- https://mvnrepository.com/artifact/org.jacoco/jacoco-maven-plugin -->
+            <!-- JaCoCo -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.13</version>
+                <executions>
+                    <!-- 테스트 실행 전 JaCoCo 에이전트 준비 -->
+                    <execution>
+                        <id>prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                        <configuration>
+                            <excludes>
+                                <!-- Application 클래스 -->
+                                <exclude>**/*Application.class</exclude>
+
+                                <!-- DTO, Config 패키지 제외 -->
+                                <exclude>**/dto/**</exclude>
+                                <exclude>**/config/**</exclude>s
+                            </excludes>
+                        </configuration>
+                    </execution>
+
+                    <!-- 테스트 실행 후 리포트 생성 -->
+                    <execution>
+                        <id>report</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- https://mvnrepository.com/artifact/org.sonarsource.scanner.maven/sonar-maven-plugin -->
+            <!-- SonarQube -->
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>5.1.0.4751</version>
             </plugin>
         </plugins>
     </build>
