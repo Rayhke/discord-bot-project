@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 class BitMaskTest {
 
     @ParameterizedTest
-    @MethodSource("list")
+    @MethodSource("source")
     void test(EnumSet<BitMask> expected) {
         int raw = BitMask.getRaw(expected);
         log.debug("raw: {}", raw);
@@ -25,7 +25,7 @@ class BitMaskTest {
         Assertions.assertEquals(expected, actual);
     }
 
-    private static Stream<Arguments> list() {
+    private static Stream<Arguments> source() {
         return Stream.of(
                 Arguments.of(
                         EnumSet.of(
